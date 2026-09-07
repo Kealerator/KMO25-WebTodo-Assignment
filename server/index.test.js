@@ -69,7 +69,7 @@ describe("Testing user management", () => {
   });
 
   it("should log in", async () => {
-    const response = await fetch("http://localhost:3001/users/signin", {
+    const response = await fetch(url + "/signin", {
       method: "post",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ user }),
