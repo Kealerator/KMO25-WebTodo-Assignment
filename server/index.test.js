@@ -1,7 +1,9 @@
 import { expect } from "chai";
-const url = "http://localhost:3001/tasks";
+const host = "http://localhost:3001";
 
 describe("Testing basic database functionality", () => {
+  var url = host + "/tasks";
+
   it("should get all tasks", async () => {
     const response = await fetch(url);
     const data = await response.json();
@@ -41,5 +43,21 @@ describe("Testing basic database functionality", () => {
     const data = await response.json();
     expect(response.status).to.equal(400);
     expect(data).to.include.all.keys("error");
+  });
+});
+
+describe("Testing user management", () => {
+  var url = host + "/users";
+  it("should sign up", async () => {
+    const newUser = { email: "foo@test.com", password: "password123" };
+    const response = await fetch(url + "/signup", {
+      method: "post",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ user: newUser }),
+    });
+    const data = await response.json();
+    expect(response.status).to.equal(201);
+    expect(data).to.include.all.keys(["id", "email"]);
+    expect(data.email).to.equal(newUser.email);
   });
 });
