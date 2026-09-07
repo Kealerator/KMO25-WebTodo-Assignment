@@ -1,4 +1,8 @@
-import { insertTask, selectAllTasks } from "../models/Task.js";
+import {
+  insertTask,
+  selectAllTasks,
+  deleteTask as deleteTaskModel,
+} from "../models/Task.js";
 
 const getTasks = async (req, res, next) => {
   try {
@@ -39,13 +43,20 @@ const postTask = async (req, res, next) => {
 };
 
 const deleteTask = async (req, res, next) => {
-  const { task } = req.body;
-
   try {
-    if (!task || !task.id) {
+    const { id } = req.params;
+
+    if (!id) {
       return next(new ApiError("Tasks ID not found", 400));
     }
-    const result = await deleteTask(task.id);
+
+    const result = await deleteTaskModel(id);
+
+    if (result.rowCount === 0) {
+      return next(new ApiError("Task description is required", 404));
+    }
+
+    return res.status(200).json(result.rows[0]);
   } catch (error) {
     return next(error);
   }

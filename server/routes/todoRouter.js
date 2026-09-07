@@ -8,8 +8,9 @@ import {
 } from "../controllers/TaskController.js";
 
 const router = Router();
+
 router.get("/", getTasks);
 router.post("/", auth, createTask);
-router.delete("/", auth, deleteTask);
+router.delete("/:id", auth, deleteTask);
 
 export default router;

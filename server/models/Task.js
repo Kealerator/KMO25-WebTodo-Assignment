@@ -1,4 +1,3 @@
-import e from "cors";
 import { pool } from "../helper/db.js";
 
 const selectAllTasks = async () => {
@@ -13,7 +12,6 @@ const insertTask = async (description) => {
 };
 
 const deleteTask = async (id) => {
-  return await pool.query("DELETE FROM task WHERE ID =");
+  return await pool.query("DELETE FROM task WHERE ID = $1 RETURNING *", [id]);
 };
-
-export { selectAllTasks, insertTask };
+export { selectAllTasks, insertTask, deleteTask };
