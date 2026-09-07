@@ -1,9 +1,7 @@
 import pkg from "pg";
 import "dotenv/config";
-
-const environment = process.env.NODE_ENV || "development";
-const { Pool } = pg;
-
+const environment = process.env.NODE_ENV || "development" || "development";
+const { Pool } = pkg;
 const openDb = () => {
   const pool = new Pool({
     user: process.env.DB_USER,
@@ -17,6 +15,5 @@ const openDb = () => {
   });
   return pool;
 };
-
 const pool = openDb();
 export { pool };

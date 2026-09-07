@@ -8,7 +8,7 @@ router.get("/", (req, res, next) => {
     if (err) {
       return next(err);
     }
-    res.status(200).json(result.rows);
+    res.status(200).json(result.rows || []);
   });
 });
 
@@ -31,7 +31,7 @@ router.post("/", (req, res, next) => {
   );
 });
 
-router.delete("/:id", (req, res) => {
+router.delete("/:id", (req, res, next) => {
   const { id } = req.params;
   pool.query(`DELETE FROM task WHERE id = $1`, [id], (err, result) => {
     if (err) {

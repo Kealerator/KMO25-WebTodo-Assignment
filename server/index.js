@@ -1,8 +1,8 @@
 import express from "express";
 import cors from "cors";
-import { pool } from "./helper/db.js";
+import todoRouter from "./routers/todoRouter.js";
 
-const port = process.env.PORT || 3001;
+const port = process.env.PORT;
 
 const app = express();
 app.use(cors());
