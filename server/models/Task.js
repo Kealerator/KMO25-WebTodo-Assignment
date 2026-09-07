@@ -5,4 +5,15 @@ const selectAllTasks = async () => {
   return await pool.query("SELECT * FROM task");
 };
 
-export { selectAllTasks };
+const insertTask = async (description) => {
+  return await pool.query(
+    "INSERT INTO task (DESCRIPTION) VALUES ($1) RETURNING *",
+    [description],
+  );
+};
+
+const deleteTask = async (id) => {
+  return await pool.query("DELETE FROM task WHERE ID =");
+};
+
+export { selectAllTasks, insertTask };
