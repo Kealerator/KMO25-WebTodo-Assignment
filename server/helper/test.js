@@ -1,12 +1,10 @@
 import fs from "fs/promises";
 import path from "path";
 import { pool } from "./db.js";
+import { hash } from "bcrypt";
 import jwt from "jsonwebtoken";
-const __dirname = import.meta.dirname;
 
-const getToken = (email) => {
-  return jwt.sign({ email }, process.env.JWT_SECRET_KEY, { expiresIn: "1h" });
-};
+const __dirname = import.meta.dirname;
 
 const initializeTestDb = async () => {
   const sql = await fs.readFile(path.resolve(__dirname, "../db.sql"), "utf8");
@@ -21,4 +19,8 @@ const insertTestUser = async (user) => {
   ]);
 };
 
-export { initializeTestDb };
+const getToken = (email) => {
+  return jwt.sign({ email }, process.env.JWT_SECRET_KEY, { expiresIn: "1h" });
+};
+
+export { initializeTestDb, insertTestUser, getToken };
